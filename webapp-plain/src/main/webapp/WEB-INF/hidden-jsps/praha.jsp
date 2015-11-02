@@ -8,6 +8,7 @@
 <jsp:attribute name="body">
 
   <p><fmt:message key="praha.text"/> </p>
+  <%-- this page must be called through the PrahaServlet, otherwise the value of ${now} is not provided  --%>
   <p><fmt:formatDate value="${now}" type="both" dateStyle="long" timeStyle="long"/></p>
 
 </jsp:attribute>

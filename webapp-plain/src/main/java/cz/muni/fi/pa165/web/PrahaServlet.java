@@ -15,7 +15,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
- * Servlet preparing data for JSP page.
+ * Servlet preparing data for JSP page. If the page praha.jsp is called directly instead through
+ * this servlet, the request attributes <b>now</b> and <b>message</b> are not defined.
  *
  * @author Martin Kuba makub@ics.muni.cz
  */
