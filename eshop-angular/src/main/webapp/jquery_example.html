@@ -19,20 +19,6 @@
                 }
             });
         }
-
-        function loadCategories() {
-            $.ajax({
-                type: 'GET',
-                url: '/eshop/api/v1/categories',
-                success: function (data) {
-                    var categories = data._embedded.categories;
-                    for(var i=0;i<categories.length;i++) {
-                        var p = categories[i];
-                        $('#categories_list').append('<tr><td>'+p.id+'</td><td>'+p.name+'</td></tr>');
-                    }
-                }
-            });
-        }
     </script>
     <style>
         table.basic { border-collapse: collapse; margin: 10px; }
@@ -56,22 +42,6 @@
     </thead>
     <tbody id="products_list"></tbody>
 </table>
-
-<hr>
-
-<button onclick="loadCategories()">Load all categories to table</button>
-
-<table class="basic">
-    <caption>Categories</caption>
-    <thead>
-    <tr>
-        <th>id</th>
-        <th>name</th>
-    </tr>
-    </thead>
-    <tbody id="categories_list"></tbody>
-</table>
-
 
 </body>
 </html>
