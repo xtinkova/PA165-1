@@ -14,6 +14,8 @@ pa165eshopApp.config(['$routeProvider',
         when('/category/:categoryId', {templateUrl: 'partials/category_detail.html', controller: 'CategoryDetailCtrl'}).
         when('/admin/products', {templateUrl: 'partials/admin_products.html', controller: 'AdminProductsCtrl'}).
         when('/admin/newproduct', {templateUrl: 'partials/admin_new_product.html', controller: 'AdminNewProductCtrl'}).
+        when('/admin/categories', {templateUrl: 'partials/admin_categories.html', controller: 'AdminCategoriesCtrl'}).
+        when('/admin/newcategory', {templateUrl: 'partials/admin_new_category.html', controller: 'AdminNewCategoryCtrl'}).
         otherwise({redirectTo: '/shopping'});
     }]);
 
@@ -193,3 +195,42 @@ eshopControllers.directive('convertToInt', function () {
         }
     };
 });
+
+/*
+ * Admin categories
+ */
+eshopControllers.controller('AdminCategoriesCtrl',
+    function ($scope, $rootScope, $routeParams, $http) {
+        //initial load of all categories
+        $http.get('/eshop/api/v1/categories').then(function (response) {
+            $scope.categories = response.data._embedded.categories;
+        });
+    });
+
+/*
+ * Page with form for creating new category
+ */
+eshopControllers.controller('AdminNewCategoryCtrl',
+    function ($scope, $routeParams, $http, $location, $rootScope) {
+        //set object bound to form fields
+        $scope.category = {
+            'name': ''
+        };
+        // function called when submit button is clicked, creates category on server
+        $scope.create = function (category) {
+            $http({
+                method: 'POST',
+                url: '/eshop/api/v1/categories/create',
+                data: category
+            }).then(function success(response) {
+                var createdCategory= response.data;
+                //display confirmation alert
+                $rootScope.successAlert = 'A new category "'+createdCategory.name+'" was created';
+                //change view to list of products
+                $location.path("/admin/categories");
+            }, function error(response) {
+                //display error
+                $scope.errorAlert = 'Cannot create category !';
+            });
+        };
+    });
