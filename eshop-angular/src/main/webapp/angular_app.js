@@ -118,9 +118,8 @@ eshopControllers.controller('AdminProductsCtrl',
         //initial load of all products
         loadAdminProducts($http, $scope);
         // function called when Delete button is clicked
-        $scope.deleteProduct = function (productId, index) {
-            var product = $scope.products[index];
-            console.log("deleting product[" + index + '] with id=' + productId + ' (' + product.name + ')');
+        $scope.deleteProduct = function (product) {
+            console.log("deleting product with id=" + product.id + ' (' + product.name + ')');
             $http.delete(product._links.delete.href).then(
                 function success(response) {
                     console.log('deleted product ' + product.id + ' on server');
